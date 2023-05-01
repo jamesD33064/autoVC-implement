@@ -202,3 +202,7 @@ class Generator(nn.Module):
         return mel_outputs, mel_outputs_postnet, torch.cat(codes, dim=-1)
 
     
+# 這是一個用於語音合成的神經網絡模型。這個模型由Encoder, Decoder 和 Postnet三個子模塊組成。
+# Encoder的作用是將輸入的音頻信號編碼成一個語義表示，並將此表示用於解碼器的輸入，以便生成相應的語音。
+# Decoder的作用是接收編碼器的語義表示並生成與該表示相對應的語音信號。
+# Postnet模塊則用於將輸出的聲學特徵進行後處理，以提高語音質量。

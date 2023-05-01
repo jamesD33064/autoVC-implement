@@ -18,3 +18,19 @@ class D_VECTOR(nn.Module):
         embeds_normalized = embeds.div(norm)
         return embeds_normalized
     
+
+# root - 
+#     - /spmel 
+#     - /wavs
+#     - data_loader.py
+#     - make_metadata.py
+#     - model_vc.py 
+#     - model_bl.py 
+#     - preprocess.py
+#     - solver_encoder.py
+
+#     - train.ipynb
+#     - MelGan 的 model
+
+#     - interface.py (For MelGan)
+#     - modules.py (For MelGan)
