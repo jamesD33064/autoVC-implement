@@ -1,2 +1,7 @@
+/__pycache__
 /spmel
 /wavs
+/wavs1
+
+*.ckpt
+*.pth
