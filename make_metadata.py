@@ -31,7 +31,8 @@ def pad_along_axis(array: np.ndarray, target_length: int, axis: int = 0):
     return np.pad(array, pad_width=npad, mode='constant', constant_values=0)
 
 speakers = []
-for speaker in sorted(subdirList[1:]):
+# for speaker in sorted(subdirList[1:]):
+for speaker in sorted(subdirList):
     print('Processing speaker: %s' % speaker)
     utterances = []
     utterances.append(speaker)
@@ -55,11 +56,11 @@ for speaker in sorted(subdirList[1:]):
         # print(melsp.shape)
         emb = C(melsp)
         embs.append(emb.detach().squeeze().cpu().numpy())    
-        
-utterances.append(np.mean(embs, axis=0))
-for fileName in sorted(fileList):
-    utterances.append(os.path.join(speaker,fileName))
-speakers.append(utterances)
+            
+    utterances.append(np.mean(embs, axis=0))
+    for fileName in sorted(fileList):
+        utterances.append(os.path.join(speaker,fileName))
+    speakers.append(utterances)
 
 with open(os.path.join(rootDir, 'train.pkl'), 'wb') as handle:
     pickle.dump(speakers, handle)
