@@ -15,7 +15,7 @@ C.load_state_dict(new_state_dict)
 
 # 指的是說一個語者說了幾種不同內容的話，讓資料的數量盡量一樣，內容可以不一樣。
 num_uttrs = 68
-len_crop = 176
+len_crop = 80
 
 # Directory containing mel-spectrograms
 rootDir = './spmel'
@@ -43,14 +43,16 @@ for speaker in sorted(subdirList[1:]):
     embs = []
     for i in range(num_uttrs):
         tmp = np.load(os.path.join(dirName, speaker, fileList[idx_uttrs[i]]))
+        # print(tmp.shape)
         # pad if the current one is too short   
-        if tmp.shape[0] <= len_crop:
-            pad = int(len_crop - tmp.shape[0])
-            tmp = pad_along_axis(tmp,pad)
+        if tmp.shape[1] <= len_crop: # 過短要填充
+            pad = int(len_crop - tmp.shape[1]) #要填充多少
+            tmp = pad_along_axis(pad,tmp)
             melsp = torch.from_numpy(tmp[np.newaxis,:, :]).cpu()
         else:              
-            left = np.random.randint(0, tmp.shape[0]-len_crop)
-            melsp = torch.from_numpy(tmp[np.newaxis, left:left+len_crop, :]).cpu()
+            left = np.random.randint(0, tmp.shape[1]-len_crop)
+            melsp = torch.from_numpy(tmp[np.newaxis,:, left:left+len_crop]).cpu()
+        # print(melsp.shape)
         emb = C(melsp)
         embs.append(emb.detach().squeeze().cpu().numpy())    
         
